@@ -1,5 +1,6 @@
 import Link from "next/link";
 import NavBar from './components/navBar'
+import { retrieveUserIdentity } from "./components/userAuthFunctions";
 
 export default function Home() {
   return (
@@ -8,11 +9,12 @@ export default function Home() {
         <NavBar />
 
         <div className="flex justify-center">
-          {/* <Link 
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-          href='/signup'>
-            Sign Up
-          </Link> */}
+          
+
+          {/* <button
+          onClick={retrieveUserIdentity}>
+            clck this
+          </button> */}
 
         </div>
       </div>

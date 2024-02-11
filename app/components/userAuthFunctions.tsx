@@ -11,26 +11,28 @@ async function signUpNewUser(email: string, password: string, name: string) {
     email: email,
     password: password,
     options: {
-      data: {
-        name: name
-      },
+      emailRedirectTo: 'https://example.com/welcome',
+      // data: {
+      //   name: name
+      // },
     },
   })
 }
 
-async function signInWithEmail(email: string, password: string) {
+async function loginWithEmail(email: string, password: string) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email: email,
     password: password,
   })
 
+  retrieveUserIdentity()
 }
 
-// async function retrieveUserIdentity(){
-//   // const { data: { user } } = await supabase.auth.getUser()
-//   const { data, error } = await supabase.auth.getUserIdentities()
-//   console.log(data?.identities)
-// }
+async function retrieveUserIdentity(){
+  // const { data: { user } } = await supabase.auth.getUser()
+  const { data, error } = await supabase.auth.getUserIdentities()
+  console.log(data?.identities)
+}
 
 // async function addUserData(name: string, email: string) {
 //   const { error } = await supabase
@@ -38,4 +40,4 @@ async function signInWithEmail(email: string, password: string) {
 //     .insert({ user_name: {name}, user_email: {email} })
 // }
 
-export { signUpNewUser, signInWithEmail }
+export { signUpNewUser, loginWithEmail, retrieveUserIdentity }

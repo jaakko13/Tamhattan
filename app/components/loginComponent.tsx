@@ -3,7 +3,7 @@
 import React, { Fragment, useRef, useState } from 'react'
 import vaakuna from '../../public/vaakuna.svg'
 import Image from 'next/image'
-import { signInWithEmail } from './userAuthFunctions'
+import { loginWithEmail, retrieveUserIdentity } from './userAuthFunctions'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
 
@@ -18,8 +18,7 @@ function LoginComponent() {
 
     const onSubmit = async (event: any) => {
         //event.preventDefault(); //prevents keep reload
-        signInWithEmail(email, password)
-        
+        loginWithEmail(email, password)
     }
 
 

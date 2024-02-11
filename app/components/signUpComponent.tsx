@@ -20,7 +20,6 @@ function SignUpComponent() {
         //event.preventDefault(); //prevents keep reload
         if (password === confPassword) {
             signUpNewUser(email, password, name)
-            // addUserData(name, email)
         }
         else {
             setOpen(true)
