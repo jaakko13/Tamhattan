@@ -7,7 +7,7 @@ import { createClient } from '@/utils/supabase/server'
 const cookieStore = cookies()
 const supabase = createClient(cookieStore)
 
-async function SignUpNewUser(email: string, password: string) {
+async function signUpNewUser(email: string, password: string) {
     const { data, error } = await supabase.auth.signUp({
         email: email,
         password: password,
@@ -17,4 +17,11 @@ async function SignUpNewUser(email: string, password: string) {
     })
 }
 
-export default SignUpNewUser
+async function signInWithEmail(email: string, password: string) {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    })
+  }
+
+export {signUpNewUser, signInWithEmail}
