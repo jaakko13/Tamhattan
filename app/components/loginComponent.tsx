@@ -19,6 +19,7 @@ function LoginComponent() {
     const onSubmit = async (event: any) => {
         //event.preventDefault(); //prevents keep reload
         signInWithEmail(email, password)
+        
     }
 
 

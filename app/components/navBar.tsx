@@ -17,6 +17,11 @@ const dropdown = [
     { name: 'Login', href: '/login' }
 ]
 
+const loggedInDropdown = [
+    {name: 'Your Profile', href: '/yourprofile'},
+    {name: 'Settings', href: '/settings'}
+]
+
 function classNames(...classes: any[]) {
     return classes.filter(Boolean).join(' ')
 }

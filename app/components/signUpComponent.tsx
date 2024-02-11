@@ -19,7 +19,8 @@ function SignUpComponent() {
     const onSubmit = async (event: any) => {
         //event.preventDefault(); //prevents keep reload
         if (password === confPassword) {
-            signUpNewUser(email, password)
+            signUpNewUser(email, password, name)
+            // addUserData(name, email)
         }
         else {
             setOpen(true)
