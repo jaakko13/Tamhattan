@@ -12,9 +12,9 @@ async function signUpNewUser(email: string, password: string, name: string) {
     password: password,
     options: {
       emailRedirectTo: 'https://example.com/welcome',
-      // data: {
-      //   name: name
-      // },
+      data: {
+        name: name
+      },
     },
   })
 }
@@ -28,10 +28,22 @@ async function loginWithEmail(email: string, password: string) {
   retrieveUserIdentity()
 }
 
-async function retrieveUserIdentity(){
+async function retrieveUserIdentity() {
   // const { data: { user } } = await supabase.auth.getUser()
   const { data, error } = await supabase.auth.getUserIdentities()
-  console.log(data?.identities)
+  return data?.identities
+}
+
+async function loggedInCheck() {
+  var loggedIn
+
+  if (retrieveUserIdentity() != undefined) {
+    loggedIn = true
+  } else {
+    loggedIn = false
+  }
+  console.log(loggedIn)
+  return loggedIn
 }
 
 // async function addUserData(name: string, email: string) {
@@ -40,4 +52,4 @@ async function retrieveUserIdentity(){
 //     .insert({ user_name: {name}, user_email: {email} })
 // }
 
-export { signUpNewUser, loginWithEmail, retrieveUserIdentity }
+export { signUpNewUser, loginWithEmail, retrieveUserIdentity, loggedInCheck }

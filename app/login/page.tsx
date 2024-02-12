@@ -8,7 +8,6 @@ export default function Login() {
                 <NavBar />
                 <div className="flex justify-center">
                     <LoginComponent />
-
                 </div>
             </div>
         </main>

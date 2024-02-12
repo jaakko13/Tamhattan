@@ -6,7 +6,6 @@ export default function SignUp() {
     <main>
       <div className="bg">
         <NavBar />
-
         <div className="flex justify-center">
           <SignUpComponent />
         </div>
