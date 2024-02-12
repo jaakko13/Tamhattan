@@ -9,13 +9,16 @@ export default function Home() {
         <NavBar />
 
         <div className="flex justify-center">
-          
+
 
           {/* <button
           onClick={retrieveUserIdentity}>
             clck this
           </button> */}
-            https://one.me/fiatkzfi
+          <Link className="text-white" href='https://one.me/fiatkzfi'>
+            Save on Domains by going to -{'>'} https://one.me/fiatkzfi
+
+          </Link>
         </div>
       </div>
     </main>

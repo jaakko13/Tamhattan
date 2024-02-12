@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { signUpNewUser } from './userAuthFunctions'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import ErrorDialog from './errorDialog'
 
 function SignUpComponent() {
     const [name, setName] = useState('')
@@ -13,19 +14,18 @@ function SignUpComponent() {
     const [password, setPassword] = useState('')
     const [confPassword, setConfPassword] = useState('')
 
-    const [open, setOpen] = useState(false)
-    const cancelButtonRef = useRef(null)
+    const [errorOpen, setErrorOpen] = useState(false)
+    // const cancelButtonRef = useRef(null)
 
     const onSubmit = async (event: any) => {
-        //event.preventDefault(); //prevents keep reload
-        if (password === confPassword) {
-            signUpNewUser(email, password, name)
-        }
-        else {
-            setOpen(true)
+        event.preventDefault(); //prevents keep reload
+        if (password === confPassword && await signUpNewUser(email, password, name)) {
+            console.log('created user!')
+        } else {
+            setErrorOpen(true)
+            console.log('somethign went worng')
         }
     }
-
 
     return (
         <div className="flex size-3/12 flex-col justify-center bg-white mt-24 rounded-xl">
@@ -123,9 +123,9 @@ function SignUpComponent() {
                         </button>
                     </div>
                 </form>
+                <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen}/>
 
-
-                <Transition.Root show={open} as={Fragment}>
+                {/* <Transition.Root show={open} as={Fragment}>
                     <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={setOpen}>
                         <Transition.Child
                             as={Fragment}
@@ -158,11 +158,11 @@ function SignUpComponent() {
                                                 </div>
                                                 <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                                     <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                                        Passwords Do NOT Match
+                                                        Error during Sign Up!
                                                     </Dialog.Title>
                                                     <div className="mt-2">
                                                         <p className="text-sm text-gray-500">
-                                                            Make sure you type the correct password in both fields and try again!
+                                                            Something went wrong during Sign Up. Make sure your passwords match and that it is at least 6 character long!
                                                         </p>
                                                     </div>
                                                 </div>
@@ -182,8 +182,9 @@ function SignUpComponent() {
                             </div>
                         </div>
                     </Dialog>
-                </Transition.Root>
+                </Transition.Root> */}
             </div>
+
         </div>)
 }
 

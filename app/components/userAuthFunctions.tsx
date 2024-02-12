@@ -7,6 +7,7 @@ const cookieStore = cookies()
 const supabase = createClient(cookieStore)
 
 async function signUpNewUser(email: string, password: string, name: string) {
+  var success
   const { data, error } = await supabase.auth.signUp({
     email: email,
     password: password,
@@ -17,6 +18,14 @@ async function signUpNewUser(email: string, password: string, name: string) {
       },
     },
   })
+
+  if (data.user == null) {
+    success = false
+  } else {
+    success = true
+  }
+
+  return success
 }
 
 async function loginWithEmail(email: string, password: string) {
