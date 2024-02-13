@@ -2,6 +2,7 @@
 
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
+import { redirect } from 'next/navigation'
 
 const cookieStore = cookies()
 const supabase = createClient(cookieStore)
@@ -55,10 +56,14 @@ async function loggedInCheck() {
   return loggedIn
 }
 
+async function navigate(whereTo: string){
+  redirect(`/${whereTo}`)
+}
+
 // async function addUserData(name: string, email: string) {
 //   const { error } = await supabase
 //     .from('Users')
 //     .insert({ user_name: {name}, user_email: {email} })
 // }
 
-export { signUpNewUser, loginWithEmail, retrieveUserIdentity, loggedInCheck }
+export { signUpNewUser, loginWithEmail, retrieveUserIdentity, loggedInCheck, navigate }

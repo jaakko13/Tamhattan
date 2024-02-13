@@ -31,7 +31,7 @@ function classNames(...classes: any[]) {
 
 function NavBar() {
 
-    const [loggedIn, setLoggedIn] = useState(() => loggedInCheck)    
+    // const [loggedIn, setLoggedIn] = useState(() => loggedInCheck)    
 
     return (
         <Disclosure as="nav" className="bg-gray-800">

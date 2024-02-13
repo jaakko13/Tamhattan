@@ -1,9 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/16/solid'
-import React, { Fragment, useRef, useState } from 'react'
+import React, { Fragment, useRef } from 'react'
 
 function ErrorDialog({errorOpen, setErrorOpen}: {errorOpen: boolean, setErrorOpen: React.Dispatch<React.SetStateAction<boolean>>}) {
-    // {errorOpen}: {errorOpen: boolean}
     const cancelButtonRef = useRef(null)
 
     return (
@@ -44,7 +43,7 @@ function ErrorDialog({errorOpen, setErrorOpen}: {errorOpen: boolean, setErrorOpe
                                             </Dialog.Title>
                                             <div className="mt-2">
                                                 <p className="text-sm text-gray-500">
-                                                    Something went wrong during Sign Up. Make sure your passwords match and that it is at least 6 character long!
+                                                    Something went wrong during Sign Up. Make sure your passwords match and that it is at least 6 characters long!
                                                 </p>
                                             </div>
                                         </div>
