@@ -3,6 +3,9 @@
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
+import { useEffect } from 'react'
+import { User } from '@supabase/supabase-js'
+
 
 const cookieStore = cookies()
 const supabase = createClient(cookieStore)
@@ -35,30 +38,44 @@ async function loginWithEmail(email: string, password: string) {
     password: password,
   })
 
-  retrieveUserIdentity()
+  if (await retrieveUser() != null) {
+    return true
+  } else {
+    return false
+  }
 }
 
-async function retrieveUserIdentity() {
-  // const { data: { user } } = await supabase.auth.getUser()
-  const { data, error } = await supabase.auth.getUserIdentities()
-  return data?.identities
+async function retrieveUser() {
+  // const { data, error } = await supabase.auth.getUserIdentities()
+  // console.log(data?.identities)
+
+  const { data: { user } } = await supabase.auth.getUser()
+
+  console.log(user)
+  return user
 }
 
 async function loggedInCheck() {
-  var loggedIn
 
-  if (retrieveUserIdentity() != undefined) {
-    loggedIn = true
+  const { data, error } = await supabase.auth.getUser()
+  console.log(data.user)
+  // return data.user
+
+  if (data.user != null) {
+    return true
   } else {
-    loggedIn = false
+    return false
   }
-  console.log(loggedIn)
-  return loggedIn
 }
 
-async function navigate(whereTo: string){
+async function signOut() {
+  const { error } = await supabase.auth.signOut()
+}
+
+async function navigate(whereTo: string) {
   redirect(`/${whereTo}`)
 }
+
 
 // async function addUserData(name: string, email: string) {
 //   const { error } = await supabase
@@ -66,4 +83,4 @@ async function navigate(whereTo: string){
 //     .insert({ user_name: {name}, user_email: {email} })
 // }
 
-export { signUpNewUser, loginWithEmail, retrieveUserIdentity, loggedInCheck, navigate }
+export { signUpNewUser, loginWithEmail, retrieveUser, loggedInCheck, navigate, signOut }

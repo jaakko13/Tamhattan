@@ -1,19 +1,24 @@
 'use client'
 
-import React, { Fragment, useRef, useState } from 'react'
+import React, { useState } from 'react'
 import vaakuna from '../../public/vaakuna.svg'
 import Image from 'next/image'
-import { loginWithEmail, retrieveUserIdentity } from './userAuthFunctions'
-import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import { loginWithEmail } from './userAuthFunctions'
+import { navigate } from './userAuthFunctions'
+import ErrorDialog from './dialogs/errorDialog'
 
 function LoginComponent() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [errorOpen, setErrorOpen] = useState(false)
 
     const onSubmit = async (event: any) => {
         event.preventDefault(); //prevents keep reload
-        loginWithEmail(email, password)
+        if(await loginWithEmail(email, password)){
+            navigate('')
+        }else{
+            setErrorOpen(true)
+        }
     }
 
     return (
@@ -78,7 +83,7 @@ function LoginComponent() {
                     </div>
                 </form>
 
-
+        <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen} title={'Error during Login!'} text={'Something went wrong during Login. Make sure your email and password are spelled correctly!'}/>
             </div>
         </div>)
 }

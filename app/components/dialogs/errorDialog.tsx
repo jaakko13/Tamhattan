@@ -2,7 +2,7 @@ import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/16/solid'
 import React, { Fragment, useRef } from 'react'
 
-function ErrorDialog({errorOpen, setErrorOpen}: {errorOpen: boolean, setErrorOpen: React.Dispatch<React.SetStateAction<boolean>>}) {
+function ErrorDialog({errorOpen, setErrorOpen, title, text}: {errorOpen: boolean, setErrorOpen: React.Dispatch<React.SetStateAction<boolean>>, title: string, text: string}) {
     const cancelButtonRef = useRef(null)
 
     return (
@@ -39,11 +39,11 @@ function ErrorDialog({errorOpen, setErrorOpen}: {errorOpen: boolean, setErrorOpe
                                         </div>
                                         <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                                             <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                                                Error during Sign Up!
+                                                {title}
                                             </Dialog.Title>
                                             <div className="mt-2">
                                                 <p className="text-sm text-gray-500">
-                                                    Something went wrong during Sign Up. Make sure your passwords match and that it is at least 6 characters long!
+                                                    {text}
                                                 </p>
                                             </div>
                                         </div>

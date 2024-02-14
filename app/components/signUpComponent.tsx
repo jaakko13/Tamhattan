@@ -123,7 +123,7 @@ function SignUpComponent() {
                     </div>
                 </form>
 
-                <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen} />
+                <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen} title={'Error during Sign Up!'} text={'Something went wrong during Sign Up. Make sure your passwords match and that it is at least 6 characters long!'}/>
                 <SuccessDialog successOpen={successOpen} setSuccessOpen={setSuccessOpen} />
 
             </div>

@@ -1,8 +1,26 @@
+'use client'
+
 import Link from "next/link";
 import NavBar from './components/navBar'
-import { retrieveUserIdentity } from "./components/userAuthFunctions";
+import { retrieveUser, loggedInCheck } from "./components/userAuthFunctions";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [loggedIn, setLoggedIn] = useState<() => Promise<boolean>>()
+
+  // useEffect(() => {
+  //   console.log('sdadad')
+  //   const log: () => Promise<boolean> = async () => {
+      
+  //     // setLoggedIn()
+  //     return await loggedInCheck()
+  //   }
+
+  //   setLoggedIn(log)
+  //   console.log('sdadad')
+
+  // }, [])
+
   return (
     <main>
       <div className="bg">

@@ -1,12 +1,16 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { use, useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { retrieveUserIdentity, loggedInCheck } from './userAuthFunctions'
-import { log } from 'console'
+import { retrieveUser, loggedInCheck, signOut } from './userAuthFunctions'
+import { User } from '@supabase/supabase-js'
 
+// interface dropdownMenu {
+//     name: string,
+//     href: string,
+// }
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -21,8 +25,9 @@ const dropdown = [
 ]
 
 const loggedInDropdown = [
-    {name: 'Your Profile', href: '/yourprofile'},
-    {name: 'Settings', href: '/settings'}
+    { name: 'Your Profile', href: '/yourprofile' },
+    { name: 'Settings', href: '/settings' },
+    { name: 'Sign Out', href: '', onclick: signOut}
 ]
 
 function classNames(...classes: any[]) {
@@ -30,8 +35,18 @@ function classNames(...classes: any[]) {
 }
 
 function NavBar() {
+    const [loggedIn, setLoggedIn] = useState(false)
+    const [user, setUser] = useState<User | null>()
 
-    // const [loggedIn, setLoggedIn] = useState(() => loggedInCheck)    
+    useEffect(() => {
+        const check = async () => {
+            const log = await loggedInCheck()
+            const user = await retrieveUser()
+            setUser(user)
+            setLoggedIn(log)
+        }
+        check()
+    }, [])
 
     return (
         <Disclosure as="nav" className="bg-gray-800">
@@ -80,6 +95,14 @@ function NavBar() {
                             </div>
                             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
+                                <div>
+                                    {loggedIn ? (
+                                        <p className='text-green-500'>{user?.user_metadata.name}</p>
+                                    ) : (
+                                        <p></p>
+                                    )}
+                                </div>
+
                                 {/* Profile dropdown */}
                                 <Menu as="div" className="relative ml-3">
                                     <div>
@@ -103,18 +126,44 @@ function NavBar() {
                                         leaveTo="transform opacity-0 scale-95"
                                     >
                                         <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                            {dropdown.map((item) => (
-                                                <Menu.Item key={item.name}>
-                                                    {({ active }) => (
-                                                        <a
-                                                            href={item.href}
-                                                            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
-                                                        >
-                                                            {item.name}
-                                                        </a>
-                                                    )}
-                                                </Menu.Item>
-                                            ))}
+                                            {loggedIn ? (
+                                                loggedInDropdown.map((item) => (
+                                                    <Menu.Item key={item.name}>
+                                                        {({ active }) => (
+                                                            <a
+                                                                href={item.href}
+                                                                onClick={item.onclick}
+                                                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                            >
+                                                                {item.name}
+                                                            </a>
+                                                        )}
+                                                    </Menu.Item>
+                                                )
+                                                )
+                                            ) : (
+                                                dropdown.map((item) => (
+                                                    <Menu.Item key={item.name}>
+                                                        {({ active }) => (
+                                                            <a
+                                                                href={item.href}
+                                                                className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                            >
+                                                                {item.name}
+                                                            </a>
+                                                        )}
+                                                    </Menu.Item>
+                                                )
+                                                
+                                                )
+                                                
+
+                                                    
+                                            )
+                                            }
+
+
+
                                         </Menu.Items>
                                     </Transition>
                                 </Menu>
