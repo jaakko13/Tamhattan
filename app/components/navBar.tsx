@@ -25,9 +25,9 @@ const dropdown = [
 ]
 
 const loggedInDropdown = [
-    { name: 'Your Profile', href: '/yourprofile' },
-    { name: 'Settings', href: '/settings' },
-    { name: 'Sign Out', href: '', onclick: signOut }
+    { name: 'Your Profile', href: '/yourprofile'},
+    { name: 'Settings', href: '/settings'},
+    { name: 'Sign Out', href: '/signout' }
 ]
 
 function classNames(...classes: any[]) {
@@ -132,14 +132,16 @@ function NavBar() {
                                                         {({ active }) => (
                                                             <a
                                                                 href={item.href}
-                                                                onClick={item.onclick}
                                                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                                                             >
                                                                 {item.name}
                                                             </a>
                                                         )}
+                                                        
                                                     </Menu.Item>
+                                                    
                                                 )
+                                               
                                                 )
                                             ) : (
                                                 dropdown.map((item) => (
@@ -155,8 +157,10 @@ function NavBar() {
                                                     </Menu.Item>
                                                 )
                                                 )
-                                            )
+                                                
+                                        )
                                             }
+                                            
                                         </Menu.Items>
                                     </Transition>
                                 </Menu>
@@ -183,8 +187,9 @@ function NavBar() {
                         </div>
                     </Disclosure.Panel>
                 </>
-            )}
-        </Disclosure>
+            )
+            }
+        </Disclosure >
     )
 }
 
