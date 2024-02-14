@@ -27,7 +27,7 @@ const dropdown = [
 const loggedInDropdown = [
     { name: 'Your Profile', href: '/yourprofile' },
     { name: 'Settings', href: '/settings' },
-    { name: 'Sign Out', href: '', onclick: signOut}
+    { name: 'Sign Out', href: '', onclick: signOut }
 ]
 
 function classNames(...classes: any[]) {
@@ -154,16 +154,9 @@ function NavBar() {
                                                         )}
                                                     </Menu.Item>
                                                 )
-                                                
                                                 )
-                                                
-
-                                                    
                                             )
                                             }
-
-
-
                                         </Menu.Items>
                                     </Transition>
                                 </Menu>

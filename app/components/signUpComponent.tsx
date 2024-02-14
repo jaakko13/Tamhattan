@@ -27,7 +27,7 @@ function SignUpComponent() {
     }
 
     return (
-        <div className="flex size-3/12 flex-col justify-center bg-white mt-24 rounded-xl">
+        <div className="flex flex-col h-1/2 w-96 justify-center bg-white mt-24 mb-10 px-1 rounded-xl box-border">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm pt-6">
                 <Image
                     className="mx-auto h-10 w-auto"
@@ -43,7 +43,7 @@ function SignUpComponent() {
                 <form className="space-y-6" onSubmit={onSubmit}>
                     <div>
                         <label className="block text-sm font-medium leading-6 text-gray-900">
-                            Name
+                            Username
                         </label>
                         <div className="mt-2">
                             <input

@@ -22,7 +22,7 @@ function LoginComponent() {
     }
 
     return (
-        <div className="flex size-3/12 flex-col justify-center bg-white mt-24 rounded-xl">
+        <div className="flex h-1/2 w-96 flex-col justify-center bg-white mt-24 mb-10 px-1 rounded-xl">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm pt-6">
                 <Image
                     className="mx-auto h-10 w-auto"
