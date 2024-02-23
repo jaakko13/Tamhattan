@@ -14,9 +14,9 @@ import { User } from '@supabase/supabase-js'
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
-    { name: 'Weather', href: '#', current: false },
-    { name: 'Electricity', href: '#', current: false },
-    { name: 'Transport', href: '#', current: false },
+    { name: 'Weather', href: '/weather', current: false },
+    { name: 'Electricity', href: '/electricity', current: false },
+    { name: 'Transport', href: '/transport', current: false },
 ]
 
 const dropdown = [

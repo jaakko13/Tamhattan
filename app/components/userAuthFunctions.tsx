@@ -75,6 +75,12 @@ async function navigate(whereTo: string) {
   redirect(`/${whereTo}`)
 }
 
+// async function getPostData(postID: bigint){
+//   await navigate('Post')
+
+  
+// }
+
 
 // async function addUserData(name: string, email: string) {
 //   const { error } = await supabase
