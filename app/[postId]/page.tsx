@@ -8,7 +8,7 @@ import { createReply } from '../components/apiCalls'
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 import { newReply, listenReply } from '../interfaces/interfaces'
-import { navigate } from '../components/userAuthFunctions'
+import { navigate, retrieveUser } from '../components/userAuthFunctions'
 
 
 const DynamicPost = () => {
@@ -27,24 +27,38 @@ const DynamicPost = () => {
   const [fetchRepliesError, setFetchRepliesError] = useState<string>()
   const [replies, setReplies] = useState<any[]>([])
   const [replyText, setReplyText] = useState('')
-
+  const [placeText, setPlaceText] = useState('')
+  const [btn, setBtn] = useState<boolean>()
 
   const onSubmit = async (event: any) => {
-    // event.preventDefault(); //prevents keep reload
+    event.preventDefault(); //prevents keep reload
     let data: newReply = { replyText: replyText, postId: postId }
     await createReply(data)
+    setReplyText('')
 
     // router.refresh()
     // navigate(`${postId}`)
 
   }
 
+  useEffect(() => {
+    const channels = supabase.channel('custom-all-channel')
+      .on(
+        'postgres_changes',
+        { event: '*', schema: 'public', table: 'replies' },
+        (payload) => {
+          // console.log('Change received!', payload)
+          const data = payload.new
+          setReplies([...replies, payload.new as listenReply])
+        }
+      )
+      .subscribe()
 
-
-  
+  }, [replies, setReplies])
 
 
   useEffect(() => {
+
     const fetchPost = async () => {
       const { data, error } = await supabase
         .from('posts')
@@ -87,21 +101,22 @@ const DynamicPost = () => {
     }
     fetchReplies()
 
-    const channels = supabase.channel('custom-all-channel')
-    .on(
-      'postgres_changes',
-      { event: '*', schema: 'public', table: 'replies' },
-      (payload) => {
-        // console.log('Change received!', payload)
-        const data = payload.new
-          setReplies([...replies, payload.new as listenReply])
+
+  }, [postId])
+
+
+  useEffect(() => {
+    const btnAbility = async () => {
+      if (await retrieveUser()) {
+        setPlaceText('Text (required)')
+        setBtn(true)
+      } else {
+        setPlaceText('You need to sign in to reply')
+        setBtn(false)
       }
-    )
-    .subscribe()
-
-
-
-  }, [postId, supabase, replies, setReplies])
+    }
+    btnAbility()
+  }, [])
 
   return (
     <main>
@@ -119,7 +134,7 @@ const DynamicPost = () => {
               </div>
 
               <div className='justify-center text-black'>
-                <form className="space-y-6 " onSubmit={onSubmit}>
+                <form className="space-y-6 " onSubmit={onSubmit} >
                   {/* action={createReply} */}
                   <div>
                     <label className="block text-sm font-medium leading-6 text-gray-900">
@@ -132,24 +147,23 @@ const DynamicPost = () => {
                         value={replyText}
                         onChange={input => setReplyText(input.target.value)}
                         required
-                        placeholder='Text (required)'
+                        placeholder={placeText}
                         className="block w-full h-24 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                       />
                       <input type='hidden' name='postId' value={postId ?? undefined} />
                     </div>
                   </div>
 
+                  <button type="submit" disabled={!btn} className="flex w-full justify-center disabled:bg-red-800 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                    Reply
+                  </button>
+
                   <div className='pb-10'>
 
-                    <button
-                      type="submit"
-                      onClick={() => router.refresh()}
-                      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    >
-                      Reply
-                    </button>
+
                   </div>
                 </form>
+
               </div>
 
               {fetchRepliesError && (<p>{fetchRepliesError}</p>)}
@@ -157,7 +171,7 @@ const DynamicPost = () => {
               {replies && (
                 <div>
                   {replies.map(item => (
-                    <div className="mb-2 w-full text-white hover:bg-slate-800 hover:rounded-xl hover:border-2 hover:cursor-pointer p-1 ">
+                    <div key={item.id} className="mb-2 w-full text-white hover:bg-slate-800 hover:rounded-xl hover:border-2 hover:cursor-pointer p-1 ">
                       <p className="text-sm">-{item.author}</p>
                       <p className="text-lg">{item.content}</p>
                     </div>

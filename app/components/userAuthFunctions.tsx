@@ -5,9 +5,7 @@ import { createClient } from '@/utils/supabase/server'
 import { redirect } from 'next/navigation'
 import { useEffect } from 'react'
 import { User } from '@supabase/supabase-js'
-
-const cookieStore = cookies()
-const supabase = createClient(cookieStore)
+import supabase from '@/utils/supabase/client'
 
 async function signUpNewUser(email: string, password: string, name: string) {
   var success

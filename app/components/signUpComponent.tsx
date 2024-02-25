@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { signUpNewUser } from './userAuthFunctions'
 import ErrorDialog from './dialogs/errorDialog'
 import SuccessDialog from './dialogs/successDialog'
+import Link from 'next/link'
 
 function SignUpComponent() {
     const [name, setName] = useState('')
@@ -122,6 +123,13 @@ function SignUpComponent() {
                         </button>
                     </div>
                 </form>
+
+                <div className='flex justify-center text-purple-700'>
+                    <Link
+                    href='/login'>
+                        Already have an Account? Login
+                        </Link>
+                </div>
 
                 <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen} title={'Error during Sign Up!'} text={'Something went wrong during Sign Up. Make sure your passwords match and that it is at least 6 characters long!'}/>
                 <SuccessDialog successOpen={successOpen} setSuccessOpen={setSuccessOpen} />

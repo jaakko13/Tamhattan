@@ -4,12 +4,13 @@ import Link from "next/link";
 import NavBar from './components/navBar'
 import { useEffect, useState } from "react";
 import supabase from "@/utils/supabase/client";
-import { navigate } from "./components/userAuthFunctions";
+import { navigate, retrieveUser } from "./components/userAuthFunctions";
 
 export default function Home() {
 
   const [fetchError, setFetchError] = useState<string>()
   const [posts, setPosts] = useState<any[]>()
+  const [btn, setBtn] = useState<boolean>()
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -29,6 +30,18 @@ export default function Home() {
       }
     }
     fetchPosts()
+
+    const btnAbility = async () => {
+      if(await retrieveUser()){
+        console.log('true')
+        setBtn(true)
+      }else{
+        console.log('false')
+
+        setBtn(false)
+      }
+    }
+    btnAbility()
 
 
   }, [])
@@ -51,7 +64,9 @@ export default function Home() {
             <div className="flex justify-between flex-row mb-2">
               {/* title with new post button*/}
               <p className="text-4xl text-fuchsia-600">TALK TAMHATTAN</p>
-              <button className="rounded-xl bg-blue-100 items-end" onClick={() => navigate('createPost')}>CREATE POST</button>
+              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={!btn} onClick={() => navigate('createPost')}>CREATE POST</button>
+              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={btn} onClick={() => navigate('signup')}>CREATE ACCOUNT TO POST</button>
+
 
             </div>
             {fetchError && (<p>{fetchError}</p>)}
@@ -63,7 +78,8 @@ export default function Home() {
                     query: {
                       postId: item.id
                     }
-                  }}>
+                  }}
+                  key={item.id}>
                     <div className="mb-2 w-full text-white hover:bg-slate-800 hover:rounded-xl hover:border-2 hover:cursor-pointer p-1 border-b">
                       <p className="text-2xl">{item.title}</p>
                       <p className="text-sm text-slate-400">{item.content.slice(0, 80) + '...'}</p>

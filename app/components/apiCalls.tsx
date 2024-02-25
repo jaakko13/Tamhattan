@@ -4,9 +4,7 @@ import { navigate, retrieveUser } from "./userAuthFunctions"
 import { cookies } from 'next/headers'
 import { createClient } from '@/utils/supabase/server'
 import {newPost, newReply} from '../interfaces/interfaces'
-
-const cookieStore = cookies()
-const supabase = createClient(cookieStore)
+import supabase from "@/utils/supabase/client"
 
 
 async function createPost(data: newPost) {
