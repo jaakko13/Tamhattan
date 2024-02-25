@@ -7,16 +7,11 @@ import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { retrieveUser, loggedInCheck, signOut } from './userAuthFunctions'
 import { User } from '@supabase/supabase-js'
 
-// interface dropdownMenu {
-//     name: string,
-//     href: string,
-// }
-
 const navigation = [
     { name: 'Home', href: '/', current: true },
-    { name: 'Weather', href: '#', current: false },
-    { name: 'Electricity', href: '#', current: false },
-    { name: 'Transport', href: '#', current: false },
+    { name: 'Weather', href: '/weather', current: false },
+    { name: 'Electricity', href: '/electricity', current: false },
+    { name: 'Transport', href: '/transport', current: false },
 ]
 
 const dropdown = [
