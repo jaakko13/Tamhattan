@@ -18,6 +18,7 @@ export default function Home() {
         .from('posts')
         .select()
         .is('parent_id', null)
+        .order('created_at', {ascending: false})
 
       if (error) {
         setFetchError('Failed to fecth posts')
