@@ -3,10 +3,15 @@
 import Link from "next/link";
 import NavBar from './components/navBar'
 import { useEffect, useState } from "react";
-import supabase from "@/utils/supabase/client";
-import { navigate, retrieveUser } from "./components/userAuthFunctions";
+import { createClient } from "../utils/supabase/client";
+import { retrieveUser } from "./components/userAuthFunctions";
+import { cookies } from "next/headers";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  // const cookieStore = cookies()
+  const router = useRouter()
+  const supabase = createClient()
 
   const [fetchError, setFetchError] = useState<string>()
   const [posts, setPosts] = useState<any[]>()
@@ -18,7 +23,7 @@ export default function Home() {
         .from('posts')
         .select()
         .is('parent_id', null)
-        .order('created_at', {ascending: false})
+        .order('created_at', { ascending: false })
 
       if (error) {
         setFetchError('Failed to fecth posts')
@@ -33,10 +38,10 @@ export default function Home() {
     fetchPosts()
 
     const btnAbility = async () => {
-      if(await retrieveUser()){
+      if (await retrieveUser()) {
         console.log('true')
         setBtn(true)
-      }else{
+      } else {
         console.log('false')
 
         setBtn(false)
@@ -65,8 +70,8 @@ export default function Home() {
             <div className="flex justify-between flex-row mb-2">
               {/* title with new post button*/}
               <p className="text-4xl text-fuchsia-600">TALK TAMHATTAN</p>
-              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={!btn} onClick={() => navigate('createPost')}>CREATE POST</button>
-              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={btn} onClick={() => navigate('signup')}>CREATE ACCOUNT TO POST</button>
+              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={!btn} onClick={() => router.push('/createPost')}>CREATE POST</button>
+              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={btn} onClick={() => router.push('/signup')}>CREATE ACCOUNT TO POST</button>
 
 
             </div>
@@ -80,7 +85,7 @@ export default function Home() {
                       postId: item.id
                     }
                   }}
-                  key={item.id}>
+                    key={item.id}>
                     <div className="mb-2 w-full text-white hover:bg-slate-800 hover:rounded-xl hover:border-2 hover:cursor-pointer p-1 border-b">
                       <p className="text-2xl">{item.title}</p>
                       <p className="text-sm text-slate-400">{item.content.slice(0, 80) + '...'}</p>

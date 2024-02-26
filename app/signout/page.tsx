@@ -1,13 +1,16 @@
 'use client'
 
 import React, { useEffect } from 'react'
-import { signOut, navigate } from '../components/userAuthFunctions'
+import { signOut } from '../components/userAuthFunctions'
+import { useRouter } from 'next/navigation'
 
 function SignOut() {
+    const router = useRouter()
+
     useEffect(() => {
         const out = async () => {
             await signOut()
-            navigate('')
+            router.push('/')
         }
         out()
     }, [])
