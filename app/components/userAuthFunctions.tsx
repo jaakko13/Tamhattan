@@ -1,11 +1,13 @@
-'use server'
+// 'use server'
 
-import { cookies } from 'next/headers'
-import { createClient } from '@/utils/supabase/server'
-import { redirect } from 'next/navigation'
+// import { cookies } from 'next/headers'
+import { createClient } from '../../utils/supabase/client'
+import { redirect, useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 import { User } from '@supabase/supabase-js'
-import supabase from '@/utils/supabase/client'
+
+// const cookieStore = cookies()
+const supabase = createClient()
 
 async function signUpNewUser(email: string, password: string, name: string) {
   var success
@@ -29,61 +31,22 @@ async function signUpNewUser(email: string, password: string, name: string) {
   return success
 }
 
-async function loginWithEmail(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email: email,
-    password: password,
-  })
-
-  if (await retrieveUser() != null) {
-    return true
-  } else {
-    return false
-  }
-}
-
 async function retrieveUser() {
   // const { data, error } = await supabase.auth.getUserIdentities()
   // console.log(data?.identities)
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
-  console.log(user)
-  return user
-}
-
-async function loggedInCheck() {
-
-  const { data, error } = await supabase.auth.getUser()
-  console.log(data.user)
-  // return data.user
-
-  if (data.user != null) {
-    return true
-  } else {
-    return false
-  }
+  console.log(session)
+  return session
 }
 
 async function signOut() {
   const { error } = await supabase.auth.signOut()
 }
 
-async function navigate(whereTo: string) {
-  redirect(`/${whereTo}`)
-}
-
-// async function getPostData(postID: bigint){
-//   await navigate('Post')
-
-  
+// async function navigate(whereTo: string) {
+//   redirect(`/${whereTo}`)
 // }
 
-
-// async function addUserData(name: string, email: string) {
-//   const { error } = await supabase
-//     .from('Users')
-//     .insert({ user_name: {name}, user_email: {email} })
-// }
-
-export { signUpNewUser, loginWithEmail, retrieveUser, loggedInCheck, navigate, signOut }
+export { signUpNewUser, retrieveUser, signOut }

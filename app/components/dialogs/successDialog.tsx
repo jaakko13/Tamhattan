@@ -1,10 +1,11 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckBadgeIcon } from '@heroicons/react/16/solid'
+import { useRouter } from 'next/navigation'
 import React, { Fragment, useRef } from 'react'
-import { navigate } from '../userAuthFunctions'
 
 function SuccessDialog({successOpen, setSuccessOpen}: {successOpen: boolean, setSuccessOpen: React.Dispatch<React.SetStateAction<boolean>>}) {
     const cancelButtonRef = useRef(null)
+    const router = useRouter()
 
     return (
         <Transition.Root show={successOpen} as={Fragment}>
@@ -54,7 +55,7 @@ function SuccessDialog({successOpen, setSuccessOpen}: {successOpen: boolean, set
                                     <button
                                         type="button"
                                         className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-green-500 sm:ml-3 sm:w-auto"
-                                        onClick={() => navigate('login')}
+                                        onClick={() => router.push('/login')}
                                         //setSuccessOpen(false)
 
                                     >

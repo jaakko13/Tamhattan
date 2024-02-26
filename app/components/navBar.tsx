@@ -4,7 +4,7 @@ import React, { use, useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { retrieveUser, loggedInCheck, signOut } from './userAuthFunctions'
+import { retrieveUser, signOut } from './userAuthFunctions'
 import { User } from '@supabase/supabase-js'
 
 const navigation = [
@@ -35,10 +35,9 @@ function NavBar() {
 
     useEffect(() => {
         const check = async () => {
-            const log = await loggedInCheck()
-            const user = await retrieveUser()
-            setUser(user)
-            setLoggedIn(log)
+            const session = await retrieveUser()
+            setUser(session?.user);
+            (session) ? setLoggedIn(true) : setLoggedIn(false)
         }
         check()
     }, [])

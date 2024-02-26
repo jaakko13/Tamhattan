@@ -3,22 +3,35 @@
 import React, { useState } from 'react'
 import vaakuna from '../../public/vaakuna.svg'
 import Image from 'next/image'
-import { loginWithEmail } from './userAuthFunctions'
-import { navigate } from './userAuthFunctions'
+// import { loginWithEmail } from './userAuthFunctions'
+// import { navigate } from './userAuthFunctions'
 import ErrorDialog from './dialogs/errorDialog'
+import { createClient } from '@/utils/supabase/client'
+import { redirect, useRouter } from 'next/navigation'
+
+
 
 function LoginComponent() {
+    const supabase = createClient()
+    const router = useRouter();
+
+
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [errorOpen, setErrorOpen] = useState(false)
 
     const onSubmit = async (event: any) => {
-        event.preventDefault(); //prevents keep reload
-        if(await loginWithEmail(email, password)){
-            navigate('')
+        // event.preventDefault(); //prevents keep reload
+        if( await supabase.auth.signInWithPassword({
+            email: email,
+            password: password,
+        })){
+            router.push('/')
         }else{
             setErrorOpen(true)
         }
+        // router.refresh();
+
     }
 
     return (
@@ -83,7 +96,7 @@ function LoginComponent() {
                     </div>
                 </form>
 
-        <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen} title={'Error during Login!'} text={'Something went wrong during Login. Make sure your email and password are spelled correctly!'}/>
+                <ErrorDialog errorOpen={errorOpen} setErrorOpen={setErrorOpen} title={'Error during Login!'} text={'Something went wrong during Login. Make sure your email and password are spelled correctly!'} />
             </div>
         </div>)
 }
