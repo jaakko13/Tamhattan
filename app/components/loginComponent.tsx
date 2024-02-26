@@ -8,6 +8,7 @@ import Image from 'next/image'
 import ErrorDialog from './dialogs/errorDialog'
 import { createClient } from '@/utils/supabase/client'
 import { redirect, useRouter } from 'next/navigation'
+import { retrieveUser } from './userAuthFunctions'
 
 
 
@@ -21,11 +22,14 @@ function LoginComponent() {
     const [errorOpen, setErrorOpen] = useState(false)
 
     const onSubmit = async (event: any) => {
-        // event.preventDefault(); //prevents keep reload
-        if( await supabase.auth.signInWithPassword({
+        event.preventDefault(); //prevents keep reload
+        console.log('sent')
+        await supabase.auth.signInWithPassword({
             email: email,
             password: password,
-        })){
+        })
+
+        if(await retrieveUser()){
             router.push('/')
         }else{
             setErrorOpen(true)
