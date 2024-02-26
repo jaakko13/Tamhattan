@@ -1,13 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import NavBar from "../components/navBar";
-import { createPost } from '../components/apiCalls'
 import { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { navigate } from '../components/userAuthFunctions';
-import {newPost} from '../interfaces/interfaces'
+import { newPost } from '../interfaces/interfaces'
+import { useRouter } from 'next/navigation';
+import { createClient } from '@/utils/supabase/client';
+import { retrieveUser } from '../components/userAuthFunctions';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -16,20 +17,35 @@ function classNames(...classes: string[]) {
 
 
 function CreatePost() {
+    const router = useRouter()
+    const supabase = createClient()
 
     const [title, setTitle] = useState('')
     const [content, setContent] = useState('')
     const [flair, setFlair] = useState('')
+    const [postAuthor, setPostAuthor] = useState<string>()
     const [shown, setShown] = useState('Flair (Required)')
 
 
     const onSubmit = async (event: any) => {
         event.preventDefault(); //prevents keep reload
-        let data: newPost = {title: title, content: content, flair: flair}
-        await createPost(data)
+        const { error } = await supabase
+            .from('posts')
+            .insert({ title: title, content: content, author: postAuthor, flair: flair })
 
-        navigate('')
+        router.push('/')
     }
+
+
+    useEffect(() => {
+        const getAuthor = async () => {
+            const session = await retrieveUser()
+            setPostAuthor(session?.user.user_metadata.name)
+        }
+        getAuthor()
+
+
+    }, [])
 
 
     return (
@@ -39,8 +55,8 @@ function CreatePost() {
                 <div className="flex justify-center h-9/12">
                     <div className="flex flex-col justify-center w-1/2 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
 
-                        <form className="space-y-6 " onSubmit={onSubmit}> 
-                        {/* action={createPost} */}
+                        <form className="space-y-6 " onSubmit={onSubmit}>
+                            {/* action={createPost} */}
                             <div>
                                 <label className="block text-sm font-medium leading-6 text-gray-900">
                                     Title

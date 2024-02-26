@@ -3,15 +3,15 @@
 import React, { useEffect, useState } from 'react'
 import NavBar from '../components/navBar'
 import { useSearchParams } from 'next/navigation'
-import supabase from '@/utils/supabase/client'
-import { createReply } from '../components/apiCalls'
+import { createClient } from "../../utils/supabase/client";
 import { useRouter } from 'next/navigation';
 import Link from 'next/link'
 import { newReply, listenReply } from '../interfaces/interfaces'
-import { navigate, retrieveUser } from '../components/userAuthFunctions'
+import { retrieveUser } from '../components/userAuthFunctions'
 
 
 const DynamicPost = () => {
+  const supabase = createClient()
   const router = useRouter();
 
   const searchParams = useSearchParams()
@@ -21,7 +21,7 @@ const DynamicPost = () => {
   const [post, setPost] = useState<any[]>()
 
   const [title, setTitle] = useState<string>()
-  const [author, setAuthor] = useState<string>()
+  const [postAuthor, setPostAuthor] = useState<string>()
   const [content, setContent] = useState<string>('')
 
   const [fetchRepliesError, setFetchRepliesError] = useState<string>()
@@ -30,15 +30,17 @@ const DynamicPost = () => {
   const [placeText, setPlaceText] = useState('')
   const [btn, setBtn] = useState<boolean>()
 
+  const [replyAuthor, setReplyAuthor] = useState<string>()
+
+
+
   const onSubmit = async (event: any) => {
     event.preventDefault(); //prevents keep reload
-    let data: newReply = { replyText: replyText, postId: postId }
-    await createReply(data)
+    const { error } = await supabase
+        .from('replies')
+        .insert({ content: replyText, author: replyAuthor, top_parent: postId})
+
     setReplyText('')
-
-    // router.refresh()
-    // navigate(`${postId}`)
-
   }
 
   useEffect(() => {
@@ -73,7 +75,7 @@ const DynamicPost = () => {
       }
       if (data) {
         setTitle(data.title)
-        setAuthor(data.author)
+        setPostAuthor(data.author)
         setContent(data.content)
 
         console.log(data)
@@ -110,12 +112,17 @@ const DynamicPost = () => {
       if (await retrieveUser()) {
         setPlaceText('Text (required)')
         setBtn(true)
+
+        const session = await retrieveUser()
+        setReplyAuthor(session?.user.user_metadata.name)
       } else {
         setPlaceText('You need to sign in to reply')
         setBtn(false)
       }
     }
     btnAbility()
+
+
   }, [])
 
   return (
@@ -128,7 +135,7 @@ const DynamicPost = () => {
             <div className="flex flex-col w-full justify-center">
 
               <div className=" w-full text-white p-1 border-b-4 ">
-                <p className="text-md text-slate-400">By: {author}</p>
+                <p className="text-md text-slate-400">By: {postAuthor}</p>
                 <p className="text-4xl mb-4">{title}</p>
                 <p className="text-lg text-slate-400">{content}</p>
               </div>

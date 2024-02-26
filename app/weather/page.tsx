@@ -2,9 +2,16 @@ import React from 'react'
 import NavBar from '../components/navBar'
 import Image from 'next/image'
 import nam from '../../public/nam.gif'
+import { createClient } from "../../utils/supabase/client";
+import { cookies } from 'next/headers'
 
-function Weather() {
-  return (
+async function Weather() {
+    const supabase = createClient()
+    const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+    return (
     <main>
             <div className='bg'>
                 <NavBar />
