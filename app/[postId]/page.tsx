@@ -131,7 +131,7 @@ const DynamicPost = () => {
         <NavBar />
 
         <div className="flex justify-center h-9/12">
-          <div className="flex flex-col justify-center w-9/12 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
+          <div className="flex flex-col justify-center w-full sm:w-9/12 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
             <div className="flex flex-col w-full justify-center">
 
               <div className=" w-full text-white p-1 border-b-4 ">
