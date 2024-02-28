@@ -103,17 +103,19 @@ function CreatePost() {
                                                     {flairDropdown.map((item) => (
                                                         <Menu.Item>
                                                             {({ active }) => (
+                                                                
                                                                 <a
                                                                     // href="#"
                                                                     onClick={() => {
                                                                         setFlair(item.name)
                                                                         setShown(item.name)
                                                                     }}
-                                                                    
                                                                     className={classNames(
                                                                         active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                                                         'block px-4 py-2 text-sm'
                                                                     )}
+                                                                    key={item.name}
+
                                                                 >
                                                                     {item.name}
                                                                 </a>
@@ -150,7 +152,6 @@ function CreatePost() {
                             <div className='pb-10'>
                                 <button
                                     type="submit"
-                                    // onClick={() => navigate('')}
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     Create Post
