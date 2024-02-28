@@ -6,6 +6,7 @@ import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { retrieveUser, signOut } from './userAuthFunctions'
 import { User } from '@supabase/supabase-js'
+import Link from 'next/link'
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -62,11 +63,15 @@ function NavBar() {
                             </div>
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
+                                    <Link
+                                    href='/'>
                                     <img
                                         className="h-8 w-auto"
                                         src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                        alt="Your Company"
+                                        alt="Home"
+                                        
                                     />
+                                    </Link>
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block">
                                     <div className="flex space-x-4">

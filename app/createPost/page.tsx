@@ -55,7 +55,7 @@ function CreatePost() {
             <div className="bg">
                 <NavBar />
                 <div className="flex justify-center h-9/12">
-                    <div className="flex flex-col justify-center w-1/2 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
+                    <div className="flex flex-col justify-center w-full sm:w-1/2 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
 
                         <form className="space-y-6 " onSubmit={onSubmit}>
                             {/* action={createPost} */}
