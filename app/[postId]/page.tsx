@@ -56,7 +56,7 @@ const DynamicPost = () => {
       )
       .subscribe()
 
-  }, [replies, setReplies])
+  }, [replies, setReplies, supabase])
 
 
   useEffect(() => {
@@ -104,7 +104,7 @@ const DynamicPost = () => {
     fetchReplies()
 
 
-  }, [postId])
+  }, [postId, supabase])
 
 
   useEffect(() => {
