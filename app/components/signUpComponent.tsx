@@ -28,7 +28,7 @@ function SignUpComponent() {
     }
 
     return (
-        <div className="flex flex-col h-1/2 w-96 justify-center bg-white mt-24 mb-10 px-1 rounded-xl box-border">
+        <div className="flex flex-col h-1/2 w-96 justify-center bg-white mt-2 sm:mt-24 mb-10 px-1 rounded-xl box-border">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm pt-6">
                 <Image
                     className="mx-auto h-10 w-auto"
