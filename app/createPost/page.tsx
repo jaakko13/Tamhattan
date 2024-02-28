@@ -14,7 +14,11 @@ function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
-
+const flairDropdown = [
+    { name: 'Discussion' },
+    { name: 'Event' },
+    { name: 'News' }
+]
 
 function CreatePost() {
     const router = useRouter()
@@ -36,7 +40,6 @@ function CreatePost() {
         router.push('/')
     }
 
-
     useEffect(() => {
         const getAuthor = async () => {
             const session = await retrieveUser()
@@ -46,7 +49,6 @@ function CreatePost() {
 
 
     }, [])
-
 
     return (
         <main>
@@ -98,57 +100,28 @@ function CreatePost() {
                                         >
                                             <Menu.Items className="absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                                                 <div className="py-1">
-                                                    <Menu.Item>
-                                                        {({ active }) => (
-                                                            <a
-                                                                href="#"
-                                                                onClick={() => {
-                                                                    setFlair('Discussion')
-                                                                    setShown('Discussion')
-                                                                }}
+                                                    {flairDropdown.map((item) => (
+                                                        <Menu.Item>
+                                                            {({ active }) => (
+                                                                
+                                                                <a
+                                                                    // href="#"
+                                                                    onClick={() => {
+                                                                        setFlair(item.name)
+                                                                        setShown(item.name)
+                                                                    }}
+                                                                    className={classNames(
+                                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                                        'block px-4 py-2 text-sm'
+                                                                    )}
+                                                                    key={item.name}
 
-                                                                className={classNames(
-                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                    'block px-4 py-2 text-sm'
-                                                                )}
-                                                            >
-                                                                Discussion
-                                                            </a>
-                                                        )}
-                                                    </Menu.Item>
-                                                    <Menu.Item>
-                                                        {({ active }) => (
-                                                            <a
-                                                                href="#"
-                                                                onClick={() => {
-                                                                    setFlair('Events')
-                                                                    setShown('Events')
-                                                                }} className={classNames(
-                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                    'block px-4 py-2 text-sm'
-                                                                )}
-                                                            >
-                                                                Events
-                                                            </a>
-                                                        )}
-                                                    </Menu.Item>
-                                                    <Menu.Item>
-                                                        {({ active }) => (
-                                                            <a
-                                                                href="#"
-                                                                onClick={() => {
-                                                                    setFlair('News')
-                                                                    setShown('News')
-                                                                }}
-                                                                className={classNames(
-                                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                                    'block px-4 py-2 text-sm'
-                                                                )}
-                                                            >
-                                                                News
-                                                            </a>
-                                                        )}
-                                                    </Menu.Item>
+                                                                >
+                                                                    {item.name}
+                                                                </a>
+                                                            )}
+                                                        </Menu.Item>
+                                                    ))}
                                                 </div>
                                             </Menu.Items>
                                         </Transition>
@@ -179,7 +152,6 @@ function CreatePost() {
                             <div className='pb-10'>
                                 <button
                                     type="submit"
-                                    // onClick={() => navigate('')}
                                     className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                                 >
                                     Create Post
