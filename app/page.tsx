@@ -66,7 +66,7 @@ export default function Home() {
         </div>
 
         <div className="flex justify-center h-9/12">
-          <div className="flex flex-col justify-center w-7/12 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
+          <div className="flex flex-col justify-center w-9/12 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
             <div className="flex justify-between flex-row mb-2">
               {/* title with new post button*/}
               <p className="text-4xl text-fuchsia-600">TALK TAMHATTAN</p>
