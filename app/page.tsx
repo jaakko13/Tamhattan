@@ -66,7 +66,7 @@ export default function Home() {
         </div>
 
         <div className="flex justify-center h-9/12">
-          <div className="flex flex-col justify-center w-9/12 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
+          <div className="flex flex-col justify-center w-11/12 sm:w-8/12 bg-slate-900 mt-24 mb-10 rounded-xl p-2 box-border">
             <div className="flex justify-between flex-row mb-2">
               {/* title with new post button*/}
               <p className="text-4xl text-fuchsia-600">TALK TAMHATTAN</p>
@@ -103,7 +103,7 @@ export default function Home() {
                     <div className='mb-2 w-full text-white hover:bg-slate-800 hover:rounded-xl hover:border-2 hover:cursor-pointer p-1 border-b'>
                       <div className="flex flex-row">
                         <p className="text-3xl mr-6">{item.title}</p>
-                        <p className={`text-sm ${color} rounded-xl p-1 w-min`}>{item.flair}</p>
+                        <p className={`text-sm ${color} rounded-xl p-1 w-min h-min`}>{item.flair}</p>
                         </div>
                       <p className="text-md text-slate-400">{item.content.slice(0, 80) + '...'}</p>
                     </div>
