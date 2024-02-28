@@ -13,7 +13,8 @@ function SignOut() {
             router.push('/')
         }
         out()
-    }, [])
+    }, [router])
+    
     return (
         <main>
             <div className='bg'>
