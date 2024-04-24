@@ -15,8 +15,6 @@ export default function Home() {
   const [posts, setPosts] = useState<any[]>()
   const [btn, setBtn] = useState<boolean>()
 
-
-
   useEffect(() => {
     const fetchPosts = async () => {
       const { data, error } = await supabase
