@@ -1,12 +1,14 @@
 'use client'
 
-import React, { use, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
-import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { retrieveUser, signOut } from './userAuthFunctions'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { retrieveUser } from './userAuthFunctions'
 import { User } from '@supabase/supabase-js'
 import Link from 'next/link'
+import vaakuna from '../../public/vaakuna.svg'
+import Image from 'next/image'
 
 const navigation = [
     { name: 'Home', href: '/', current: true },
@@ -21,8 +23,8 @@ const dropdown = [
 ]
 
 const loggedInDropdown = [
-    { name: 'Your Profile', href: '/yourprofile'},
-    { name: 'Settings', href: '/settings'},
+    { name: 'Your Profile', href: '/yourprofile' },
+    { name: 'Settings', href: '/settings' },
     { name: 'Sign Out', href: '/signout' }
 ]
 
@@ -64,13 +66,13 @@ function NavBar() {
                             <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex flex-shrink-0 items-center">
                                     <Link
-                                    href='/'>
-                                    <img
-                                        className="h-8 w-auto"
-                                        src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=500"
-                                        alt="Home"
-                                        
-                                    />
+                                        href='/'>
+                                        <Image
+                                            className="h-8 w-auto"
+                                            src={vaakuna}
+                                            alt="Home"
+
+                                        />
                                     </Link>
                                 </div>
                                 <div className="hidden sm:ml-6 sm:block">
@@ -136,11 +138,8 @@ function NavBar() {
                                                                 {item.name}
                                                             </a>
                                                         )}
-                                                        
                                                     </Menu.Item>
-                                                    
                                                 )
-                                               
                                                 )
                                             ) : (
                                                 dropdown.map((item) => (
@@ -156,10 +155,8 @@ function NavBar() {
                                                     </Menu.Item>
                                                 )
                                                 )
-                                                
-                                        )
+                                            )
                                             }
-                                            
                                         </Menu.Items>
                                     </Transition>
                                 </Menu>
