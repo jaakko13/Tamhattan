@@ -7,7 +7,7 @@ NextJS website about the city of Tampere.
 
 ## Feature Ticket
 - Every feature/addition requires an [issue to be created](https://github.com/jaakko13/Tamhattan/issues)
-  - Please link the issue to the GitHub project [Tamhattan Website](https://github.com/users/evvic/projects/3](https://github.com/users/jaakko13/projects/3))
+  - Please link the issue to the GitHub project [Tamhattan](https://github.com/users/jaakko13/projects/3)
 - The issue is then developed in a branch
   - Within the **issue page** of the created issue a branch can be generated that automatically links the issue with the beanch and the GitHub Project
   - This gives the branch an ID that matches the issues ID
