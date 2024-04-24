@@ -70,8 +70,8 @@ export default function Home() {
             <div className="flex justify-between flex-row mb-2">
               {/* title with new post button*/}
               <p className="text-4xl text-fuchsia-600">TALK TAMHATTAN</p>
-              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={!btn} onClick={() => router.push('/createPost')}>CREATE POST</button>
-              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500" hidden={btn} onClick={() => router.push('/signup')}>CREATE ACCOUNT TO POST</button>
+              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500 px-2" hidden={!btn} onClick={() => router.push('/createPost')}>POST</button>
+              <button className="rounded-xl bg-blue-100 items-end hover:bg-green-500 px-2" hidden={btn} onClick={() => router.push('/signup')}>CREATE ACCOUNT </button>
 
 
             </div>
